@@ -1,0 +1,143 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2023.1 (lin64) Build 3865809 Sun May  7 15:04:56 MDT 2023
+| Date         : Wed Apr 30 09:48:03 2025
+| Host         : insa-20927 running 64-bit Linux Mint 21.1
+| Command      : report_control_sets -verbose -file Data_Memory_control_sets_placed.rpt
+| Design       : Data_Memory
+| Device       : xc7a35t
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Control Set Information
+
+Table of Contents
+-----------------
+1. Summary
+2. Histogram
+3. Flip-Flop Distribution
+4. Detailed Control Set Information
+
+1. Summary
+----------
+
++----------------------------------------------------------+-------+
+|                          Status                          | Count |
++----------------------------------------------------------+-------+
+| Total control sets                                       |    65 |
+|    Minimum number of control sets                        |    65 |
+|    Addition due to synthesis replication                 |     0 |
+|    Addition due to physical synthesis replication        |     0 |
+| Unused register locations in slices containing registers |     0 |
++----------------------------------------------------------+-------+
+* Control sets can be merged at opt_design using control_set_merge or merge_equivalent_drivers
+** Run report_qor_suggestions for automated merging and remapping suggestions
+
+
+2. Histogram
+------------
+
++--------------------+-------+
+|       Fanout       | Count |
++--------------------+-------+
+| Total control sets |    65 |
+| >= 0 to < 4        |     0 |
+| >= 4 to < 6        |     0 |
+| >= 6 to < 8        |     0 |
+| >= 8 to < 10       |    65 |
+| >= 10 to < 12      |     0 |
+| >= 12 to < 14      |     0 |
+| >= 14 to < 16      |     0 |
+| >= 16              |     0 |
++--------------------+-------+
+* Control sets can be remapped at either synth_design or opt_design
+
+
+3. Flip-Flop Distribution
+-------------------------
+
++--------------+-----------------------+------------------------+-----------------+--------------+
+| Clock Enable | Synchronous Set/Reset | Asynchronous Set/Reset | Total Registers | Total Slices |
++--------------+-----------------------+------------------------+-----------------+--------------+
+| No           | No                    | No                     |               0 |            0 |
+| No           | No                    | Yes                    |               0 |            0 |
+| No           | Yes                   | No                     |               0 |            0 |
+| Yes          | No                    | No                     |               8 |            3 |
+| Yes          | No                    | Yes                    |               0 |            0 |
+| Yes          | Yes                   | No                     |             512 |          146 |
++--------------+-----------------------+------------------------+-----------------+--------------+
+
+
+4. Detailed Control Set Information
+-----------------------------------
+
++----------------+--------------------------+------------------+------------------+----------------+--------------+
+|  Clock Signal  |       Enable Signal      | Set/Reset Signal | Slice Load Count | Bel Load Count | Bels / Slice |
++----------------+--------------------------+------------------+------------------+----------------+--------------+
+|  CLK_IBUF_BUFG | data_array[26]           | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[14]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[13]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[12]           | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[11]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[10]           | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[0][7]_i_2_n_0 | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[7]            | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[48]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[15]           | p_0_in           |                8 |              8 |         1.00 |
+|  CLK_IBUF_BUFG | data_array[25]           | p_0_in           |                4 |              8 |         2.00 |
+|  CLK_IBUF_BUFG | data_array[6]            | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[63]           | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[53]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[52]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[51]           | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[50]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[28]           | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[16]           | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[24]           | p_0_in           |                4 |              8 |         2.00 |
+|  CLK_IBUF_BUFG | data_array[27]           | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[39]           | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[3]            | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[41]           | p_0_in           |                3 |              8 |         2.67 |
+|  CLK_IBUF_BUFG | data_array[42]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[43]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[44]           | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[45]           | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[46]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[47]           | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[49]           | p_0_in           |                4 |              8 |         2.00 |
+|  CLK_IBUF_BUFG | data_array[4]            | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[61]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[62]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[2]            | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[30]           | p_0_in           |                4 |              8 |         2.00 |
+|  CLK_IBUF_BUFG | data_array[31]           | p_0_in           |                5 |              8 |         1.60 |
+|  CLK_IBUF_BUFG | data_array[32]           | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[33]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[34]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[35]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[36]           | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[37]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[38]           | p_0_in           |                3 |              8 |         2.67 |
+|  CLK_IBUF_BUFG | data_array[40]           | p_0_in           |                5 |              8 |         1.60 |
+|  CLK_IBUF_BUFG | data_array[58]           | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[59]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[5]            | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[60]           | p_0_in           |                6 |              8 |         1.33 |
+|  CLK_IBUF_BUFG | data_array[29]           | p_0_in           |                5 |              8 |         1.60 |
+|  CLK_IBUF_BUFG | data_array[8]            | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[9]            | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[54]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[55]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[56]           | p_0_in           |                1 |              8 |         8.00 |
+|  CLK_IBUF_BUFG | data_array[57]           | p_0_in           |                7 |              8 |         1.14 |
+|  CLK_IBUF_BUFG | sig_out                  |                  |                3 |              8 |         2.67 |
+|  CLK_IBUF_BUFG | data_array[17]           | p_0_in           |                4 |              8 |         2.00 |
+|  CLK_IBUF_BUFG | data_array[18]           | p_0_in           |                4 |              8 |         2.00 |
+|  CLK_IBUF_BUFG | data_array[19]           | p_0_in           |                2 |              8 |         4.00 |
+|  CLK_IBUF_BUFG | data_array[1]            | p_0_in           |                3 |              8 |         2.67 |
+|  CLK_IBUF_BUFG | data_array[20]           | p_0_in           |                3 |              8 |         2.67 |
+|  CLK_IBUF_BUFG | data_array[21]           | p_0_in           |                3 |              8 |         2.67 |
+|  CLK_IBUF_BUFG | data_array[22]           | p_0_in           |                3 |              8 |         2.67 |
+|  CLK_IBUF_BUFG | data_array[23]           | p_0_in           |                3 |              8 |         2.67 |
++----------------+--------------------------+------------------+------------------+----------------+--------------+
+
+
