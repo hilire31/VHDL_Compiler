@@ -4,10 +4,13 @@ vhdl xil_defaultlib  \
 "../../../../compilo.srcs/sources_1/new/Bench.vhd" \
 "../../../../compilo.srcs/sources_1/new/Instruction_Memory.vhd" \
 "../../../../compilo.srcs/sources_1/new/Data_Memory.vhd" \
+"../../../../compilo.srcs/sources_1/new/Pipeline.vhd" \
+"../../../../compilo.srcs/sources_1/new/IP.vhd" \
 "../../../../compilo.srcs/sim_1/new/Test_Bench.vhd" \
 "../../../../compilo.srcs/sim_1/new/Test_ALU.vhd" \
 "../../../../compilo.srcs/sim_1/new/Test_Instruction_Memory.vhd" \
 "../../../../compilo.srcs/sim_1/new/Test_Data_Memory.vhd" \
+"../../../../compilo.srcs/sim_1/new/Test_Pipeline.vhd" \
 
 # Do not sort compile order
 nosort

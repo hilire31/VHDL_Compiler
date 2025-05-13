@@ -1,17 +1,10 @@
 Vivado Simulator v2023.1
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
 Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
-Running: /usr/local/insa/Xilinx/Vivado/2023.1/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L secureip --snapshot Test_Data_Memory_behav xil_defaultlib.Test_Data_Memory -log elaborate.log 
+Running: /usr/local/insa/Xilinx/Vivado/2023.1/bin/unwrapped/lnx64.o/xelab --incr --debug typical --relax --mt 8 -L xil_defaultlib -L secureip --snapshot Test_Pipeline_behav xil_defaultlib.Test_Pipeline -log elaborate.log 
 Using 8 slave threads.
 Starting static elaboration
+WARNING: [VRFC 10-8856] comparison between unequal length arrays always returns FALSE; left argument length 16 is different from right argument length 1 for 'std_logic_vector_93' array [/home/froussea/cours_4a/2e semestre/compil/compilo/compilo.srcs/sources_1/new/ALU.vhd:94]
+WARNING: [VRFC 10-8856] comparison between unequal length arrays always returns FALSE; left argument length 4 is different from right argument length 3 for 'std_logic_vector_93' array [/home/froussea/cours_4a/2e semestre/compil/compilo/compilo.srcs/sources_1/new/ALU.vhd:95]
 Completed static elaboration
-Starting simulation data flow analysis
-Completed simulation data flow analysis
-Time Resolution for simulation is 1ps
-Compiling package std.standard
-Compiling package std.textio
-Compiling package ieee.std_logic_1164
-Compiling package ieee.numeric_std
-Compiling architecture behavioral of entity xil_defaultlib.Data_Memory [data_memory_default]
-Compiling architecture behavioral of entity xil_defaultlib.test_data_memory
-Built simulation snapshot Test_Data_Memory_behav
+INFO: [XSIM 43-4323] No Change in HDL. Linking previously generated obj files to create kernel

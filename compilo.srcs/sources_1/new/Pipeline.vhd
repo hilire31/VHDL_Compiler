@@ -32,10 +32,18 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity Pipeline is
---  Port ( );
+Port(
+ sig_CLK : in STD_LOGIC
+);
+
 end Pipeline;
 
 architecture Behavioral of Pipeline is
+
+    COMPONENT IP  
+    Port ( CLK : in STD_LOGIC;
+           Address : out STD_LOGIC_VECTOR(7 downto 0));
+    END COMPONENT;
     
     COMPONENT Instruction_Memory 
     Port ( Address : in STD_LOGIC_VECTOR(7 downto 0);
@@ -63,7 +71,7 @@ architecture Behavioral of Pipeline is
            O : out STD_LOGIC; -- Overflow
            Z : out STD_LOGIC; -- Zero, sortie nulle
            C : out STD_LOGIC; -- Carry, la retenue
-           Ctrl_Alu : in STD_LOGIC_VECTOR(2 downto 0));
+           Ctrl_Alu : in STD_LOGIC_VECTOR(3 downto 0));
      END COMPONENT;
      
      COMPONENT Data_Memory 
@@ -105,7 +113,6 @@ signal OP_RE : STD_LOGIC_VECTOR(7 downto 0);
 signal B_RE : STD_LOGIC_VECTOR(7 downto 0);
 
 -- clock
-signal sig_CLK : STD_LOGIC;
 signal sig_RST : STD_LOGIC;
 
 -- Signaux "speciaux"
@@ -113,7 +120,7 @@ signal sig_RST : STD_LOGIC;
 signal OUT_QA_Bench : STD_LOGIC_VECTOR(7 downto 0);
 signal OUT_MUX_B_DI : STD_LOGIC_VECTOR(7 downto 0);
 
-signal OUT_LC_OP_EX : STD_LOGIC_VECTOR(2 downto 0); 
+signal OUT_LC_OP_EX : STD_LOGIC_VECTOR(3 downto 0); 
 signal OUT_S_ALU : STD_LOGIC_VECTOR(7 downto 0);
 signal OUT_MUX_B_EX : STD_LOGIC_VECTOR(7 downto 0);
 
@@ -127,10 +134,27 @@ signal OUT_LC_OP_RE : STD_LOGIC;
 signal IN_Address_InstMem : STD_LOGIC_VECTOR(7 downto 0);
 signal OUT_OUTPUT_InstMem : STD_LOGIC_VECTOR(31 downto 0);
 
+signal AFC_OP : STD_LOGIC_VECTOR(3 downto 0) := "1010";
+signal COP_OP : STD_LOGIC_VECTOR(3 downto 0) := "1110";
+signal LOAD_OP : STD_LOGIC_VECTOR(3 downto 0) := "1101";
+signal STORE_OP : STD_LOGIC_VECTOR(3 downto 0) := "0101";
+
+signal ADD_OP : STD_LOGIC_VECTOR(3 downto 0) := "0001";
+signal SUB_OP : STD_LOGIC_VECTOR(3 downto 0) := "0011";
+signal MUL_OP : STD_LOGIC_VECTOR(3 downto 0) := "0010";
+signal DIV_OP : STD_LOGIC_VECTOR(3 downto 0) := "0100";
+signal XOR_OP : STD_LOGIC_VECTOR(3 downto 0) := "1000";
+signal AND_OP : STD_LOGIC_VECTOR(3 downto 0) := "1001";
+signal OR_OP : STD_LOGIC_VECTOR(3 downto 0) := "1100";
+signal NOTA_OP : STD_LOGIC_VECTOR(3 downto 0) := "1011";
+signal NOTB_OP : STD_LOGIC_VECTOR(3 downto 0) := "1111";
 
 begin
 
--- Mapping 
+-- Instruction Pointer (IP) 
+    uIp : IP Port Map (
+        CLK => Sig_CLK,
+        Address => IN_Address_InstMem);
 
 -- Memoire d'instructions (INSTUCTION_MEMORY) 
     uIm : Instruction_Memory Port Map ( 
@@ -158,10 +182,10 @@ begin
            A => B_EX,
            B => C_EX,
            S => OUT_S_ALU,
-           --N => 
-           --O => 
-           --Z =>
-           --C => 
+           N => open,
+           O => open,
+           Z => open,
+           C => open,
            Ctrl_Alu => OUT_LC_OP_EX);
            
  -- Memoire de donnees (DATA_MEMORY) 
@@ -173,7 +197,7 @@ begin
            RST => Sig_RST,
            CLK => Sig_CLK,
            OUTPUT => OUT_OUTPUT_DataMem);
-   
+           
     
     -- Decoupage OUTPUT InstMem pour LI (A,OP,B,C)
     A_LI <= OUT_OUTPUT_InstMem(7 downto 0);
@@ -182,14 +206,14 @@ begin
     C_LI <= OUT_OUTPUT_InstMem(31 downto 24);
 
     -- MUX
-    OUT_MUX_B_DI <= OUT_QA_Bench OP_DI B_DI;
-    OUT_MUX_B_EX <= OUT_S_ALU OP_EX B_EX;
-    OUT_MUX_1_B_Mem <= A_Mem OP_Mem B_Mem ;
-    OUT_MUX_2_B_Mem <= OUT_OUTPUT_DataMem OP_Mem B_Mem;
+    OUT_MUX_B_DI <= B_DI when (OP_DI(3 downto 0) = AFC_OP or OP_DI(3 downto 0) = LOAD_OP) else OUT_QA_Bench  ;
+    OUT_MUX_B_EX <= OUT_S_ALU when (OP_EX(3 downto 0) >= ADD_OP and OP_EX(3 downto 0)<= DIV_OP) else B_EX;
+    OUT_MUX_1_B_Mem <= A_Mem when OP_Mem(3 downto 0) = STORE_OP else B_Mem ;
+    OUT_MUX_2_B_Mem <= OUT_OUTPUT_DataMem when OP_Mem(3 downto 0) = LOAD_OP else B_Mem;
     
     -- LC
-    OUT_LC_OP_EX <= '1' when OP_EX > 3;
-    OUT_LC_OP_Mem <= OP_Mem();
-    OUT_LC_OP_RE <= OP_Mem();
+    OUT_LC_OP_EX <= OP_EX(3 downto 0);
+    OUT_LC_OP_Mem <= '1' when (OP_Mem(7) = '1' and OP_Mem(6) = '1') else '0';
+    OUT_LC_OP_RE <= OP_Re(7);
     
 end Behavioral;

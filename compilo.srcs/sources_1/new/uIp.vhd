@@ -2,9 +2,9 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date: 04/29/2025 12:03:50 PM
+-- Create Date: 05/13/2025 03:33:24 PM
 -- Design Name: 
--- Module Name: Instruction_Memory - Behavioral
+-- Module Name: uIp - Behavioral
 -- Project Name: 
 -- Target Devices: 
 -- Tool Versions: 
@@ -31,17 +31,15 @@ use IEEE.NUMERIC_STD.ALL;
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity Instruction_Memory is
-    Port ( Address : in STD_LOGIC_VECTOR(7 downto 0);
-           CLK : in STD_LOGIC;
-           OUTPUT : out STD_LOGIC_VECTOR(31 downto 0));
-end Instruction_Memory;
+entity uIp is
+    Port ( CLK : in STD_LOGIC;
+           Address : out STD_LOGIC_VECTOR(7 downto 0));
+end uIp;
 
-architecture Behavioral of Instruction_Memory is
+architecture Behavioral of uIp is
 
-    type instruction_array_type is array (0 to 63) of STD_LOGIC_VECTOR(31 downto 0); 
-    signal instruction_array : instruction_array_type := (others => x"00A80700");
-    signal sig_out : STD_LOGIC_VECTOR(31 downto 0);
+signal OUTPUT : STD_LOGIC_VECTOR(7 downto 0) := (others => '0');
+
 begin
 
     -- Process clock synchro 
@@ -50,13 +48,11 @@ begin
     begin
     
         wait until CLK'event and CLK='1';
-        -- Lecture : 
-            -- prendre la valeur à l'adresse Address
-        sig_out <= instruction_array(TO_INTEGER(unsigned(Address)));
+        
+        OUTPUT <= std_logic_vector(unsigned(OUTPUT) + 1);
 
-            
     end process;
 
-    OUTPUT <= sig_out;
-    
+    Address <= OUTPUT;
+
 end Behavioral;

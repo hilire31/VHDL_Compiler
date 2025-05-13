@@ -43,7 +43,7 @@ entity ALU is
            Z : out STD_LOGIC; -- Zero, sortie nulle
            C : out STD_LOGIC; -- Carry, la retenue
            
-           Ctrl_Alu : in STD_LOGIC_VECTOR(2 downto 0)); -- Informe l'opération à faire (ADD, SUB, MUL, DIV)
+           Ctrl_Alu : in STD_LOGIC_VECTOR(3 downto 0)); -- Informe l'opération à faire (ADD, SUB, MUL, DIV)
 end ALU;
 
 architecture Behavioral of ALU is
@@ -65,7 +65,7 @@ begin
     when "0010" =>  -- Mul
         Result_Operation <= std_logic_vector(unsigned(A) * unsigned(B));
         
-    --when "110" =>  -- Div TOOOOO DOOOOOO AGAINNN
+    --when "0100" =>  -- Div TOOOOO DOOOOOO AGAINNN
       --  Result_Operation <= std_logic_vector(unsigned(A) / unsigned(B));
         
     when "1000" =>  -- XOR
