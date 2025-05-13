@@ -40,6 +40,18 @@ end Pipeline;
 
 architecture Behavioral of Pipeline is
 
+    COMPONENT Etage
+    Port ( A_in : in STD_LOGIC_VECTOR(7 downto 0);
+           OP_in : in STD_LOGIC_VECTOR(7 downto 0);
+           B_in : in STD_LOGIC_VECTOR(7 downto 0);
+           C_in : in STD_LOGIC_VECTOR(7 downto 0);
+           A_out : out STD_LOGIC_VECTOR(7 downto 0);
+           OP_out : out STD_LOGIC_VECTOR(7 downto 0);
+           B_out : out STD_LOGIC_VECTOR(7 downto 0);
+           C_out : out STD_LOGIC_VECTOR(7 downto 0);
+           CLK : in STD_LOGIC);
+    END COMPONENT;
+    
     COMPONENT IP  
     Port ( CLK : in STD_LOGIC;
            Address : out STD_LOGIC_VECTOR(7 downto 0));
@@ -161,6 +173,18 @@ begin
            Address => IN_Address_InstMem,
            CLK => Sig_CLK,
            OUTPUT => OUT_OUTPUT_InstMem); 
+           
+-- LI_DI 
+    LI_DI : Etage Port Map(
+           A_in => A_LI,
+           OP_in => OP_LI,
+           B_in => B_LI,
+           C_in => C_LI,
+           A_out => A_DI,
+           OP_out => OP_DI,
+           B_out => B_DI,
+           C_out => C_DI,
+           CLK => Sig_CLK);
 
 -- Banc de registres (BENCH) 
     uBr : Bench Port Map ( 
@@ -177,6 +201,18 @@ begin
            QA => OUT_QA_Bench,
            QB => C_DI );
            
+-- DI_EX 
+    DI_EX : Etage Port Map(
+           A_in => A_DI,
+           OP_in => OP_DI,
+           B_in => B_DI,
+           C_in => C_DI,
+           A_out => A_EX,
+           OP_out => OP_EX,
+           B_out => B_EX,
+           C_out => C_EX,
+           CLK => Sig_CLK);
+           
  -- ALU 
     uAlu : ALU Port Map(
            A => B_EX,
@@ -188,6 +224,18 @@ begin
            C => open,
            Ctrl_Alu => OUT_LC_OP_EX);
            
+-- EX_Mem 
+    EX_MEM : Etage Port Map(
+           A_in => A_EX,
+           OP_in => OP_EX,
+           B_in => B_EX,
+           C_in => x"00",
+           A_out => A_Mem,
+           OP_out => OP_Mem,
+           B_out => B_Mem,
+           C_out => open,
+           CLK => Sig_CLK);
+           
  -- Memoire de donnees (DATA_MEMORY) 
  
     uDm : Data_Memory Port Map(
@@ -197,6 +245,18 @@ begin
            RST => Sig_RST,
            CLK => Sig_CLK,
            OUTPUT => OUT_OUTPUT_DataMem);
+           
+-- Mem_RE 
+    MEM_RE : Etage Port Map(
+           A_in => A_Mem,
+           OP_in => OP_Mem,
+           B_in => B_Mem,
+           C_in => x"00",
+           A_out => A_RE,
+           OP_out => OP_RE,
+           B_out => B_RE,
+           C_out => open,
+           CLK => Sig_CLK);
            
     
     -- Decoupage OUTPUT InstMem pour LI (A,OP,B,C)
@@ -213,7 +273,7 @@ begin
     
     -- LC
     OUT_LC_OP_EX <= OP_EX(3 downto 0);
-    OUT_LC_OP_Mem <= '1' when (OP_Mem(7) = '1' and OP_Mem(6) = '1') else '0';
+    OUT_LC_OP_Mem <= '1' when (OP_Mem(7) = '1') else '0';
     OUT_LC_OP_RE <= OP_Re(7);
     
 end Behavioral;
