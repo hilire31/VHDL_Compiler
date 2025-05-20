@@ -54,34 +54,40 @@ char* convertToHex(int decimal) {
 char* converOpcode(char* opcode){
 
     if (strcmp(opcode, "AFC") == 0) {
-        return AFC_OP;
+        return convertToHex(AFC_OP);
     } else if (strcmp(opcode, "COP") == 0) {
-        return COP_OP;
+        return convertToHex(COP_OP);
     } else if (strcmp(opcode, "LOAD") == 0) {
-        return LOAD_OP;
+        return convertToHex(LOAD_OP);
     } else if (strcmp(opcode, "STORE") == 0) {
-        return STORE_OP;
+        return convertToHex(STORE_OP);
     } else if (strcmp(opcode, "ADD") == 0) {
-        return ADD_OP;
+        return convertToHex(ADD_OP;
     } else if (strcmp(opcode, "SUB") == 0) {
-        return SUB_OP;
+        return convertToHex(SUB_OP;
     } else if (strcmp(opcode, "MUL") == 0) {
-        return MUL_OP;
+        return convertToHex(MUL_OP;
     } else if (strcmp(opcode, "DIV") == 0) {
-        return DIV_OP;
+        return convertToHex(DIV_OP;
     } else if (strcmp(opcode, "XOR") == 0) {
-        return XOR_OP;
+        return convertToHex(XOR_OP;
     } else if (strcmp(opcode, "AND") == 0) {
-        return AND_OP;
+        return convertToHex(AND_OP;
     } else if (strcmp(opcode, "OR") == 0) {
-        return OR_OP;
+        return convertToHex(OR_OP;
     } else if (strcmp(opcode, "NOTA") == 0) {
-        return NOTA_OP;
+        return convertToHex(NOTA_OP;
     } else if (strcmp(opcode, "NOTB") == 0) {
-        return NOTB_OP;
+        return convertToHex(NOTB_OP;
     }
     else {
         printf("Invalid opcode.\n");
         return NULL;
     }
+}
+
+char* convertOperand(char* operand) {
+    // Assuming the operand is a decimal number
+    int decimal = atoi(operand);
+    return convertToHex(decimal);
 }
