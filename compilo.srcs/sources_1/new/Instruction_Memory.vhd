@@ -34,7 +34,8 @@ use IEEE.NUMERIC_STD.ALL;
 entity Instruction_Memory is
     Port ( Address : in STD_LOGIC_VECTOR(7 downto 0);
            CLK : in STD_LOGIC;
-           OUTPUT : out STD_LOGIC_VECTOR(31 downto 0));
+           OUTPUT : out STD_LOGIC_VECTOR(31 downto 0);
+           EN : in std_logic);
 end Instruction_Memory;
 
 architecture Behavioral of Instruction_Memory is
@@ -50,9 +51,12 @@ begin
     begin
     
         wait until CLK'event and CLK='1';
-        -- Lecture : 
-            -- prendre la valeur à l'adresse Address
-        sig_out <= instruction_array(TO_INTEGER(unsigned(Address)));
+        
+        if EN = '1' then
+            -- Lecture : 
+                -- prendre la valeur à l'adresse Address
+            sig_out <= instruction_array(TO_INTEGER(unsigned(Address)));
+        end if;
 
             
     end process;

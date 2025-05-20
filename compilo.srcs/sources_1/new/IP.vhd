@@ -33,7 +33,8 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity IP is
     Port ( CLK : in STD_LOGIC;
-           Address : out STD_LOGIC_VECTOR(7 downto 0));
+           Address : out STD_LOGIC_VECTOR(7 downto 0);
+           EN : in std_logic);
 end IP;
 
 architecture Behavioral of IP is
@@ -49,7 +50,9 @@ begin
     
         wait until CLK'event and CLK='1';
         
-        OUTPUT <= std_logic_vector(unsigned(OUTPUT) + 1);
+        if EN = '1' then
+            OUTPUT <= std_logic_vector(unsigned(OUTPUT) + 1);
+        end if;
 
     end process;
 

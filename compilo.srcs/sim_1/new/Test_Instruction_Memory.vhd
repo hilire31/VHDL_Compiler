@@ -40,12 +40,14 @@ architecture Behavioral of Test_Instruction_Memory is
     COMPONENT Instruction_Memory
     Port ( Address : in STD_LOGIC_VECTOR(7 downto 0);
            CLK : in STD_LOGIC;
-           OUTPUT : out STD_LOGIC_VECTOR(31 downto 0));
+           OUTPUT : out STD_LOGIC_VECTOR(31 downto 0);
+           EN : in std_logic);
     end COMPONENT;
     
     signal Sig_CLK : STD_LOGIC := '0'; 
     signal Sig_Address : STD_LOGIC_VECTOR(7 downto 0) := "000000001";
     signal Sig_OUTPUT : STD_LOGIC_VECTOR(31 downto 0) := (others => '0');
+    signal Sig_EN : std_logic := '1';
     
     constant Clock_period : time := 20 ns; 
 begin
@@ -53,7 +55,8 @@ begin
     Label_uut: Instruction_Memory Port Map ( 
            Address => Sig_Address,
            CLK => Sig_CLK,
-           OUTPUT => Sig_OUTPUT); 
+           OUTPUT => Sig_OUTPUT,
+           EN => Sig_EN); 
            
     -- Clock process definitions
     Clock_process : process

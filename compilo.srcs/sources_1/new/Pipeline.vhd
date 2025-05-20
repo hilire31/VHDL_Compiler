@@ -53,13 +53,15 @@ architecture Behavioral of Pipeline is
     
     COMPONENT IP  
     Port ( CLK : in STD_LOGIC;
-           Address : out STD_LOGIC_VECTOR(7 downto 0));
+           Address : out STD_LOGIC_VECTOR(7 downto 0);
+           EN : in std_logic);
     END COMPONENT;
     
     COMPONENT Instruction_Memory 
     Port ( Address : in STD_LOGIC_VECTOR(7 downto 0);
            CLK : in STD_LOGIC;
-           OUTPUT : out STD_LOGIC_VECTOR(31 downto 0));
+           OUTPUT : out STD_LOGIC_VECTOR(31 downto 0);
+           EN : in std_logic);
     END COMPONENT;
     
     COMPONENT Bench
@@ -127,6 +129,8 @@ signal B_RE : STD_LOGIC_VECTOR(7 downto 0);
 -- clock
 signal sig_RST : STD_LOGIC;
 
+signal sig_enable_IP_and_InstMem : STD_LOGIC;
+
 -- Signaux "speciaux"
 
 signal OUT_QA_Bench : STD_LOGIC_VECTOR(7 downto 0);
@@ -163,18 +167,24 @@ signal OR_OP : STD_LOGIC_VECTOR(3 downto 0) := "1100";
 signal NOTA_OP : STD_LOGIC_VECTOR(3 downto 0) := "1011";
 signal NOTB_OP : STD_LOGIC_VECTOR(3 downto 0) := "1111";
 
+-- not used :0000 0111 
+
+signal NOP : std_logic_vector(3 downto 0) := "0110";
+
 begin
 
 -- Instruction Pointer (IP) 
     uIp : IP Port Map (
         CLK => Sig_CLK,
-        Address => IN_Address_InstMem);
+        Address => IN_Address_InstMem,
+        EN => sig_enable_IP_and_InstMem);
 
 -- Memoire d'instructions (INSTUCTION_MEMORY) 
     uIm : Instruction_Memory Port Map ( 
            Address => IN_Address_InstMem,
            CLK => Sig_CLK,
-           OUTPUT => OUT_Instruction_InstMem); 
+           OUTPUT => OUT_Instruction_InstMem,
+           EN => sig_enable_IP_and_InstMem); 
            
 -- LI_DI 
     LI_DI : Etage Port Map(
@@ -279,6 +289,20 @@ begin
     OUT_LC_A_Mem <= A_Mem(6);
     OUT_LC_OP_Mem <= OP_Mem(6);
     OUT_LC_OP_RE <= OP_RE(7);
+    
+    -- Gestion d'aléas
+    
+--    -- Disable IP and InstMem to not fetch other instructions
+--    sig_enable_IP_and_InstMem <= '0' 
+        
+--        -- new instruction uses operands of previous intruction
+--        when 
+--        -- Etage LI/DI vs Etage DI/EX
+        
+        
+        
+--        (OP_EX(3 downto 0) = AFC_OP and OP_DI = COP_OP and A_EX = B_DI) or 
+         
     
 end Behavioral; ---
 
